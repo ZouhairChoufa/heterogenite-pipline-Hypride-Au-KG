@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# Lightning
+lightning_logs/
+
+# ML frameworks
+wandb/
+mlruns/
+tensorboard/
+runs/
+
+# Large data
+data/
+datasets/
+checkpoints/
+models/
+outputs/
+
+# Temporary files
+tmp/
+temp/
+cache/

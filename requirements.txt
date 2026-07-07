@@ -1,0 +1,29 @@
+# ============================================================
+# PFE BIBDA — Knowledge Graph Pipeline
+# requirements.txt — testé sur Lightning.ai (Python 3.10)
+# ============================================================
+
+# --- Données & Profiling ---
+pandas==1.5.3
+openpyxl==3.1.2
+faker==25.2.0
+ydata-profiling==4.8.3
+
+# --- Schema Matching (Module 2) ---
+sentence-transformers==3.0.1
+langchain==0.2.6
+langchain-groq==0.1.6
+langchain-core==0.2.10
+tenacity==8.3.0
+groq==0.9.0
+
+# --- Triplification (Module 3) ---
+morph-kgc==2.6.1
+rdflib==6.3.2
+
+# --- Résolution d'Entités (Module 4) ---
+splink==3.9.15
+duckdb==0.10.3
+
+# --- Utilitaires ---
+python-dotenv==1.0.1

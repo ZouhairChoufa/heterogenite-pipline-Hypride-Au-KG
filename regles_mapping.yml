@@ -1,0 +1,67 @@
+# ==============================================================================
+# regles_mapping.yml
+# ==============================================================================
+# Règles de mapping YARRRML pour Morph-KGC
+# Transforme Source_B_RH.csv en triplets RDF (N-Triples)
+#
+# Ontologies utilisées :
+#   - foaf  : http://xmlns.com/foaf/0.1/
+#   - schema: https://schema.org/
+#   - ex    : http://kg.projet.fr/ontology#
+#   - owl   : http://www.w3.org/2002/07/owl#
+# ==============================================================================
+
+prefixes:
+  ex:     "http://kg.projet.fr/ontology#"
+  foaf:   "http://xmlns.com/foaf/0.1/"
+  schema: "https://schema.org/"
+  xsd:    "http://www.w3.org/2001/XMLSchema#"
+  rdf:    "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+mappings:
+
+  # ----------------------------------------------------------------------------
+  # Mapping 1 : Employés (Source_B_RH)
+  # ----------------------------------------------------------------------------
+  employes:
+    sources:
+      - ["data/Source_B_RH.csv~csv"]
+    s: "http://kg.projet.fr/ontology#Employee_$(Matricule_RH)"
+    po:
+      - [rdf:type, ex:Employee~iri]
+      - [rdf:type, foaf:Person~iri]
+      - [ex:employeeId, $(Matricule_RH)]
+      
+      # CORRECTION ICI : last_name et first_name
+      - [foaf:familyName, $(last_name)]
+      - [foaf:firstName,  $(first_name)]
+      
+      - p: schema:birthDate
+        o:
+          value: $(date_nais)
+          datatype: xsd:date
+      - [ex:department,  $(departement)]
+      - [schema:jobTitle, $(contrat)]
+      - p: ex:monthlySalary
+        o:
+          value: $(salaire_mensuel)
+          datatype: xsd:decimal
+      - p: schema:startDate
+        o:
+          value: $(date_embauche)
+          datatype: xsd:date
+
+  # ----------------------------------------------------------------------------
+  # Mapping 2 : Clients CRM (Source_A_CRM)
+  # ----------------------------------------------------------------------------
+  clients:
+    sources:
+      - ["data/Source_A_CRM.csv~csv"]
+    s: "http://kg.projet.fr/ontology#Customer_$(ID_Client)"
+    po:
+      - [rdf:type, ex:Customer~iri]
+      - [rdf:type, foaf:Person~iri]
+      - [ex:clientId,  $(ID_Client)]
+      - [ex:fullName,      $(nom_complet)]
+      - [schema:email,     $(email)]
+      - [schema:addressLocality, $(ville)]

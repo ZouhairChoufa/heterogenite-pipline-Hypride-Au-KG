@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#99ccff", "id": "Customer_C-17215", "label": "Customer_C-17215", "shape": "dot", "size": 20, "title": "http://kg.projet.fr/ontology#Customer_C-17215"}, {"color": "#f2f2f2", "id": "Aim\u00e9 Carpentier", "label": "Aim\u00e9 Carpentier", "shape": "dot", "size": 15, "title": "Aim\u00e9 Carpentier"}, {"color": "#ff9999", "id": "Employee_RH17215", "label": "Employee_RH17215", "shape": "dot", "size": 20, "title": "http://kg.projet.fr/ontology#Employee_RH17215"}, {"color": "#f2f2f2", "id": "Marketing", "label": "Marketing", "shape": "dot", "size": 15, "title": "Marketing"}, {"color": "#f2f2f2", "id": "RH17215", "label": "RH17215", "shape": "dot", "size": 15, "title": "RH17215"}, {"color": "#f2f2f2", "id": "http://xmlns.com/foaf/0.1/Person", "label": "http://xmlns.com/foaf/0.1/Person", "shape": "dot", "size": 15, "title": "http://xmlns.com/foaf/0.1/Person"}, {"color": "#f2f2f2", "id": "1962-12-25", "label": "1962-12-25", "shape": "dot", "size": 15, "title": "1962-12-25"}, {"color": "#f2f2f2", "id": "C-17215", "label": "C-17215", "shape": "dot", "size": 15, "title": "C-17215"}, {"color": "#f2f2f2", "id": "2020-12-08", "label": "2020-12-08", "shape": "dot", "size": 15, "title": "2020-12-08"}, {"color": "#f2f2f2", "id": "6455.26", "label": "6455.26", "shape": "dot", "size": 15, "title": "6455.26"}, {"color": "#f2f2f2", "id": "Aim\u00e9", "label": "Aim\u00e9", "shape": "dot", "size": 15, "title": "Aim\u00e9"}, {"color": "#f2f2f2", "id": "francklucas@example.org", "label": "francklucas@example.org", "shape": "dot", "size": 15, "title": "francklucas@example.org"}, {"color": "#f2f2f2", "id": "CDI", "label": "CDI", "shape": "dot", "size": 15, "title": "CDI"}, {"color": "#f2f2f2", "id": "Carpentier", "label": "Carpentier", "shape": "dot", "size": 15, "title": "Carpentier"}, {"color": "#f2f2f2", "id": "EvrardBourg", "label": "EvrardBourg", "shape": "dot", "size": 15, "title": "EvrardBourg"}, {"color": "#f2f2f2", "id": "Employee", "label": "Employee", "shape": "dot", "size": 15, "title": "http://kg.projet.fr/ontology#Employee"}, {"color": "#f2f2f2", "id": "Customer", "label": "Customer", "shape": "dot", "size": 15, "title": "http://kg.projet.fr/ontology#Customer"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "fullName", "title": "fullName", "to": "Aim\u00e9 Carpentier"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "department", "title": "department", "to": "Marketing"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "employeeId", "title": "employeeId", "to": "RH17215"}, {"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "type", "title": "type", "to": "http://xmlns.com/foaf/0.1/Person"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "https://schema.org/birthDate", "title": "https://schema.org/birthDate", "to": "1962-12-25"}, {"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "clientId", "title": "clientId", "to": "C-17215"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "https://schema.org/startDate", "title": "https://schema.org/startDate", "to": "2020-12-08"}, {"arrows": "to", "color": "red", "from": "Employee_RH17215", "label": "owl:sameAs", "title": "R\u00c9CONCILIATION SPLINK", "to": "Customer_C-17215", "width": 3}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "monthlySalary", "title": "monthlySalary", "to": "6455.26"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "http://xmlns.com/foaf/0.1/firstName", "title": "http://xmlns.com/foaf/0.1/firstName", "to": "Aim\u00e9"}, {"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "https://schema.org/email", "title": "https://schema.org/email", "to": "francklucas@example.org"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "https://schema.org/jobTitle", "title": "https://schema.org/jobTitle", "to": "CDI"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "http://xmlns.com/foaf/0.1/familyName", "title": "http://xmlns.com/foaf/0.1/familyName", "to": "Carpentier"}, {"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "https://schema.org/addressLocality", "title": "https://schema.org/addressLocality", "to": "EvrardBourg"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "type", "title": "type", "to": "Employee"}, {"arrows": "to", "color": "#999999", "from": "Employee_RH17215", "label": "type", "title": "type", "to": "http://xmlns.com/foaf/0.1/Person"}, {"arrows": "to", "color": "#999999", "from": "Customer_C-17215", "label": "type", "title": "type", "to": "Customer"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
