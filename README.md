@@ -75,6 +75,6 @@ The proposed hybrid approach achieved:
 
 Master's Thesis (PFE)
 
-Faculty of Sciences and Techniques – Settat
+Faculty of Sciences  – EL Jadida
 
 2026
